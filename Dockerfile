@@ -1,7 +1,7 @@
 FROM php:8.1-cli
 
 # Instala mysqli
-RUN docker-php-ext-install mysqli
+RUN apt-get update && apt-get install -y php-mysqli
 
 # Copia os ficheiros PHP
 WORKDIR /var/www/html
