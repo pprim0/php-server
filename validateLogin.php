@@ -1,12 +1,11 @@
 <?php 
 	$db = "railway";
 	$dbhost = "trolley.proxy.rlwy.net";
-	$return["message"] = "";
-	$return["success"] = false;
 	$username = $_POST["username"];
 	$password = $_POST["password"];
-	//$username = "root";
-	//$password = "UeFiSShvSBqwfJsKcOvakNnSjvteBkZr";"UeFiSShvSBqwfJsKcOvakNnSjvteBkZr";"";
+	$return["message"] = "";
+	$return["success"] = false;
+	
 	try {
 		$conn = mysqli_connect($dbhost, $username, $password, $db, 22777);	
 		mysqli_close($conn);		
