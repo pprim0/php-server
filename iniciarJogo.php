@@ -29,11 +29,12 @@ try {
     $stmt->bind_param("ss", $email, $descricao);
     $stmt->execute();
 
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-
+  $stmt->bind_result($idNovoJogo);
+if ($stmt->fetch()) {
     $return["success"] = true;
-    $return["IDNovoJogo"] = $row["IDNovoJogo"];  // <- este campo vem do SELECT da SP
+    $return["IDNovoJogo"] = $idNovoJogo;
+}
+
 
     $stmt->close();
     $conn->close();
