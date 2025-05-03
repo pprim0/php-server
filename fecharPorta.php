@@ -1,8 +1,8 @@
 -<?php
     $db = "railway";
 	$dbhost = "trolley.proxy.rlwy.net";
-	$username = "root";$_POST["username"];
-	$password = "UeFiSShvSBqwfJsKcOvakNnSjvteBkZr";$_POST["password"];
+	$username = $_POST["username"];
+	$password = $_POST["password"];
 	$doorOrigin = $_POST["SalaOrigemController"];
 	$doorDestiny = $_POST["SalaDestinoController"];
 	$conn = mysqli_connect($dbhost, $username, $password, $db, 22777);	
