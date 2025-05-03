@@ -1,10 +1,8 @@
 <?php
 	$db = "railway";
-	$username = "root";$_POST["username"];
-	$password = "UeFiSShvSBqwfJsKcOvakNnSjvteBkZr";$_POST["password"];
-	//$username = "root";
-	//$password = "UeFiSShvSBqwfJsKcOvakNnSjvteBkZr";
 	$dbhost = "trolley.proxy.rlwy.net";
+	$username = $_POST["username"];
+	$password = $_POST["password"];
 
     $conn = mysqli_connect($dbhost,$username,$password,$db);
 	$sql = "SELECT Msg, Leitura, Sala, Sensor, TipoAlerta, Hora, HoraEscrita from mensagens where Hora >= now() - interval 60 minute ORDER BY Hora DESC";
