@@ -1,1 +1,3 @@
-<?php echo "Servidor PHP ativo — tudo a funcionar!"; ?>
+<?php 
+echo "Servidor PHP ativo — tudo a funcionar!"; 
+?>
