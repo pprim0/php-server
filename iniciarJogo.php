@@ -5,7 +5,6 @@ $db = "railway";
 $dbhost = "trolley.proxy.rlwy.net";
 $dbport = 22777;
 
-// Verifica se recebeu os parâmetros esperados
 if (!isset($_POST["username"]) || !isset($_POST["password"])) {
     echo json_encode(["success" => false, "message" => "Missing credentials"]);
     exit;
@@ -21,11 +20,14 @@ if (!$conn) {
     exit;
 }
 
-// Chama a stored procedure CriarJogo
 $sql = "CALL CriarJogo()";
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
     echo json_encode(["success" => true, "message" => "Jogo criado com sucesso"]);
 } else {
-    echo
+    echo json_encode(["success" => false, "message" => mysqli_error($conn)]);
+}
+
+mysqli_close($conn);
+?>
