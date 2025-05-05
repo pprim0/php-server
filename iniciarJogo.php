@@ -1,30 +1,26 @@
 <?php
-header("Content-Type: application/json");
-
 $db = "railway";
 $dbhost = "trolley.proxy.rlwy.net";
-$dbport = 22777;
-
-if (!isset($_POST["username"]) || !isset($_POST["password"])) {
-    echo json_encode(["success" => false, "message" => "Missing credentials"]);
-    exit;
-}
+$port = 22777;
 
 $username = $_POST["username"];
 $password = $_POST["password"];
+$email = $_POST["email"];
+$descricao = $_POST["descricao"];
 
-$conn = mysqli_connect($dbhost, $username, $password, $db, $dbport);
+$conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
 if (!$conn) {
-    echo json_encode(["success" => false, "message" => "Connection failed: " . mysqli_connect_error()]);
-    exit;
+    echo json_encode(["success" => false, "message" => "Erro de conexão: " . mysqli_connect_error()]);
+    exit();
 }
 
-$sql = "CALL CriarJogo()";
+$sql = "CALL CriarJogo('$email', '$descricao')";
 $result = mysqli_query($conn, $sql);
 
 if ($result) {
-    echo json_encode(["success" => true, "message" => "Jogo criado com sucesso"]);
+    $row = mysqli_fetch_assoc($result);
+    echo json_encode(["success" => true, "IDNovoJogo" => $row["IDNovoJogo"]]);
 } else {
     echo json_encode(["success" => false, "message" => mysqli_error($conn)]);
 }
