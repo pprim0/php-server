@@ -9,8 +9,8 @@ $password = $_POST["password"];
 //$descricao = $_POST["descricao"];
 
 // ⚠️ Hardcoded para testes via emulador
-$email = "player7@gmail.pt";
-$descricao = "teste emulador";
+$email = "joao@gmail.pt";
+$descricao = "teste joao";
 
 $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
