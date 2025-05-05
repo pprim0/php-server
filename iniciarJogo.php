@@ -9,7 +9,7 @@ $password = $_POST["password"];
 //$descricao = $_POST["descricao"];
 
 // ⚠️ Hardcoded para testes via emulador
-$email = "joao@gmail.pt";
+$email = "joao@gmail.com";
 $descricao = "teste joao";
 
 $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
