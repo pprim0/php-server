@@ -20,14 +20,24 @@ if (!$conn) {
 }
 
 $sql = "CALL CriarJogo('$email', '$descricao')";
-$result = mysqli_query($conn, $sql);
 
-if ($result) {
-    $row = mysqli_fetch_assoc($result);
-    echo json_encode(["success" => true, "IDNovoJogo" => $row["IDNovoJogo"]]);
-} else {
-    echo json_encode(["success" => false, "message" => mysqli_error($conn)]);
+try {
+    $result = mysqli_query($conn, $sql);
+
+    if ($result) {
+        $row = mysqli_fetch_assoc($result);
+        echo json_encode(["success" => true, "IDNovoJogo" => $row["IDNovoJogo"]]);
+    } else {
+        throw new Exception(mysqli_error($conn));
+    }
+} catch (Exception $e) {
+    if (str_contains($e->getMessage(), 'Já existe um jogo ativo')) {
+        echo json_encode(["success" => false, "message" => "⚠️ Já existe um jogo a correr!"]);
+    } else {
+        echo json_encode(["success" => false, "message" => $e->getMessage()]);
+    }
 }
+
 
 mysqli_close($conn);
 ?>
