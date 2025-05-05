@@ -5,12 +5,12 @@ $port = 22777;
 
 $username = $_POST["username"];
 $password = $_POST["password"];
-//$email = $_POST["email"];
-//$descricao = $_POST["descricao"];
+$email = $_POST["email"];
+$descricao = $_POST["descricao"];
 
 // ⚠️ Hardcoded para testes via emulador
-$email = "player7@gmail.pt";
-$descricao = "teste emulador";
+//$email = "player7@gmail.pt";
+//$descricao = "teste emulador";
 
 $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
