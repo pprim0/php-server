@@ -18,6 +18,14 @@ try {
     $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
     if (!$conn) {
+    http_response_code(500); // Força o erro 500 para debug
+    $return["message"] = "Erro de conexão à base de dados: " . mysqli_connect_error();
+    echo json_encode($return);
+    exit();
+    }
+
+
+    if (!$conn) {
     $return["message"] = "Erro de conexão à base de dados: " . mysqli_connect_error();
     $return["debug"] = [
         "email" => $email,
