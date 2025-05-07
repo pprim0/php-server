@@ -7,7 +7,7 @@ $username = $_POST["username"];
 $password = $_POST["password"];
 $email = $_POST["email"];
 $idJogo = $_POST["idjogo"];
-$novaDescricao = $_POST["novaDescricao"];
+$novaDescricao = $_POST["nova_descricao"]; // ⚠️ Alterado para coincidir com o campo usado no Flutter
 
 $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
