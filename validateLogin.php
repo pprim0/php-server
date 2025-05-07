@@ -18,40 +18,26 @@ try {
     $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
     if (!$conn) {
-    http_response_code(500); // Força o erro 500 para debug
-    $return["message"] = "Erro de conexão à base de dados: " . mysqli_connect_error();
-    echo json_encode($return);
-    exit();
+        http_response_code(500); // Força erro 500 no HTTP
+        $return["message"] = "Erro de conexão à base de dados: " . mysqli_connect_error();
+        $return["debug"] = [
+            "email_recebido" => $email,
+            "username_recebido" => $username
+        ];
+        header('Content-Type: application/json');
+        echo json_encode($return);
+        exit();
     }
-
-
-    if (!$conn) {
-    $return["message"] = "Erro de conexão à base de dados: " . mysqli_connect_error();
-    $return["debug"] = [
-        "email" => $email,
-        "username" => $username
-    ];
-    $return["debug"] = [
-    "email_recebido" => $email,
-    "username_recebido" => $username
-    ];
-
-    echo json_encode($return);
-    exit();
-}
-
 
     // Sucesso de autenticação com username/password
     $return["success"] = true;
 
     // Verifica se o email corresponde ao username
     $stmt = $conn->prepare("SELECT * FROM Utilizador WHERE Email = ? AND SQLUser = ?");
-$stmt->bind_param("ss", $email, $username);
-
+    $stmt->bind_param("ss", $email, $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    // Se encontrar o email, é válido
     if ($result->num_rows > 0) {
         $return["valid_email"] = true;
     } else {
@@ -66,12 +52,11 @@ $stmt->bind_param("ss", $email, $username);
 
 } catch (Exception $e) {
     $return["message"] = "Exceção: " . $e->getMessage();
-    header('Content-Type: application/json');
     $return["debug"] = [
-    "email" => $email,
-    "username" => $username
-];
-
+        "email_recebido" => $email,
+        "username_recebido" => $username
+    ];
+    header('Content-Type: application/json');
     echo json_encode($return);
 }
 ?>
