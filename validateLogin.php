@@ -27,8 +27,9 @@ try {
     $return["success"] = true;
 
     // Verifica se o email corresponde ao username
-    $stmt = $conn->prepare("SELECT * FROM Utilizador WHERE Email = ?");
-    $stmt->bind_param("s", $email);
+    $stmt = $conn->prepare("SELECT * FROM Utilizador WHERE Email = ? AND SQLUser = ?");
+$stmt->bind_param("ss", $email, $username);
+
     $stmt->execute();
     $result = $stmt->get_result();
 
