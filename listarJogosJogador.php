@@ -25,9 +25,11 @@ while ($row = $result->fetch_assoc()) {
     $dados[] = $row;
 }
 
-print("Resposta: ${response.body}");
-// Envia diretamente a lista (como espera o ListView.builder no Flutter)
-echo json_encode($dados);
+// ✅ Devolve no formato que o Flutter espera
+echo json_encode([
+    "success" => true,
+    "jogos" => $dados
+]);
 
 $stmt->close();
 $conn->close();
