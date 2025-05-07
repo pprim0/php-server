@@ -25,7 +25,6 @@ while ($row = $result->fetch_assoc()) {
     $dados[] = $row;
 }
 
-// ✅ Devolve no formato que o Flutter espera
 echo json_encode([
     "success" => true,
     "jogos" => $dados
