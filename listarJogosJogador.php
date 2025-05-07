@@ -21,12 +21,12 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 $dados = [];
-
 while ($row = $result->fetch_assoc()) {
     $dados[] = $row;
 }
 
-echo json_encode(["success" => true, "jogos" => $dados]);
+// Envia diretamente a lista (como espera o ListView.builder no Flutter)
+echo json_encode($dados);
 
 $stmt->close();
 $conn->close();
