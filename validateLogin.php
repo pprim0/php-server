@@ -18,10 +18,15 @@ try {
     $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
     if (!$conn) {
-        $return["message"] = "Erro de conexão à base de dados.";
-        echo json_encode($return);
-        exit();
-    }
+    $return["message"] = "Erro de conexão à base de dados: " . mysqli_connect_error();
+    $return["debug"] = [
+        "email" => $email,
+        "username" => $username
+    ];
+    echo json_encode($return);
+    exit();
+}
+
 
     // Sucesso de autenticação com username/password
     $return["success"] = true;
