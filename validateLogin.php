@@ -31,6 +31,11 @@ try {
         "email" => $email,
         "username" => $username
     ];
+    $return["debug"] = [
+    "email_recebido" => $email,
+    "username_recebido" => $username
+    ];
+
     echo json_encode($return);
     exit();
 }
