@@ -49,6 +49,11 @@ $stmt->bind_param("ss", $email, $username);
 } catch (Exception $e) {
     $return["message"] = "Exceção: " . $e->getMessage();
     header('Content-Type: application/json');
+    $return["debug"] = [
+    "email" => $email,
+    "username" => $username
+];
+
     echo json_encode($return);
 }
 ?>
