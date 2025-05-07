@@ -18,7 +18,7 @@ if (!$conn) {
     exit();
 }
 
-// Verificação opcional de campos
+// Verificação de campos obrigatórios
 if (empty($email) || empty($descricao)) {
     echo json_encode([
         "success" => false,
@@ -28,7 +28,34 @@ if (empty($email) || empty($descricao)) {
     exit();
 }
 
-// Prepara a chamada à stored procedure
+// ✅ Verifica se o utilizador é do tipo PLR
+$stmt = $conn->prepare("SELECT Tipo FROM Utilizador WHERE Email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($row["Tipo"] !== "PLR") {
+    echo json_encode([
+        "success" => false,
+        "message" => "Este utilizador não tem permissões para iniciar um jogo."
+    ]);
+
+        $stmt->close();
+        mysqli_close($conn);
+        exit();
+    }
+} else {
+    echo json_encode([
+        "success" => false,
+        "message" => "Utilizador não encontrado ou inválido."
+    ]);
+    $stmt->close();
+    mysqli_close($conn);
+    exit();
+}
+$stmt->close();
+
+// Chamada à stored procedure
 $sql = "CALL CriarJogo('$email', '$descricao')";
 
 try {
