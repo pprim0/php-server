@@ -22,6 +22,8 @@ if (empty($email) || empty($idJogo) || empty($novaDescricao)) {
     exit();
 }
 
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+
 try {
     $sql = "CALL AtualizarDescricaoJogo(?, ?, ?)";
     $stmt = $conn->prepare($sql);
@@ -29,9 +31,10 @@ try {
     $stmt->execute();
     echo json_encode(["success" => true, "message" => "Descrição atualizada com sucesso!"]);
     $stmt->close();
-} catch (Exception $e) {
-    echo json_encode(["success" => false, "message" => $e->getMessage()]);
+} catch (mysqli_sql_exception $e) {
+    echo json_encode(["success" => false, "message" => "Erro MySQL: " . $e->getMessage()]);
 }
+
 
 $conn->close();
 ?>
