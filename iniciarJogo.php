@@ -18,15 +18,15 @@ if (!$conn) {
     exit();
 }
 
-// Verificação de campos obrigatórios
-if (empty($email) || empty($descricao)) {
+if (empty(trim($email)) || empty(trim($descricao))) {
     echo json_encode([
         "success" => false,
-        "message" => "Email ou descrição em falta."
+        "message" => "Email ou descrição inválida (vazios ou só espaços)."
     ]);
     mysqli_close($conn);
     exit();
 }
+
 
 // ✅ Verifica se o utilizador é do tipo PLR
 $stmt = $conn->prepare("SELECT Tipo_user FROM Utilizador WHERE Email = ?");
