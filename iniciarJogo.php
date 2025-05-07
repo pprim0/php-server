@@ -29,17 +29,17 @@ if (empty($email) || empty($descricao)) {
 }
 
 // ✅ Verifica se o utilizador é do tipo PLR
-$stmt = $conn->prepare("SELECT Tipo FROM Utilizador WHERE Email = ?");
+$stmt = $conn->prepare("SELECT Tipo_user FROM Utilizador WHERE Email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if ($row["Tipo"] !== "PLR") {
-    echo json_encode([
-        "success" => false,
-        "message" => "Este utilizador não tem permissões para iniciar um jogo."
-    ]);
-
+if ($result && $row = $result->fetch_assoc()) {
+    if ($row["Tipo_user"] !== "PLR") {
+        echo json_encode([
+            "success" => false,
+            "message" => "Este utilizador não tem permissões para iniciar um jogo."
+        ]);
         $stmt->close();
         mysqli_close($conn);
         exit();
@@ -54,6 +54,7 @@ if ($row["Tipo"] !== "PLR") {
     exit();
 }
 $stmt->close();
+
 
 // Chamada à stored procedure
 $sql = "CALL CriarJogo('$email', '$descricao')";
