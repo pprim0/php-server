@@ -7,10 +7,14 @@ $username = $_POST["username"];
 $password = $_POST["password"];
 $email = $_POST["email"];
 
-$return = ["success" => false, "message" => ""];
+$return = [
+    "success" => false,
+    "valid_email" => false,
+    "message" => ""
+];
 
 try {
-    // Tenta ligar com as credenciais
+    // Tenta ligar com as credenciais fornecidas
     $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
     if (!$conn) {
@@ -19,26 +23,31 @@ try {
         exit();
     }
 
-    // Verifica se o email corresponde ao username na tabela Utilizador
+    // Sucesso de autenticação com username/password
+    $return["success"] = true;
+
+    // Verifica se o email corresponde ao username
     $stmt = $conn->prepare("SELECT * FROM Utilizador WHERE Email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // Se encontrar o email, é válido
     if ($result->num_rows > 0) {
-        $return["success"] = true;
+        $return["valid_email"] = true;
     } else {
         $return["message"] = "Email incorreto.";
     }
 
     $stmt->close();
     mysqli_close($conn);
+
     header('Content-Type: application/json');
     echo json_encode($return);
 
 } catch (Exception $e) {
     $return["message"] = "Exceção: " . $e->getMessage();
-    header('Content-Type: application/json');	
+    header('Content-Type: application/json');
     echo json_encode($return);
 }
 ?>
