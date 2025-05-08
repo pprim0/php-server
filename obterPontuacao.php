@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: application/json'); // <-- DEVE vir antes de qualquer saída
+
 $db = "railway";
 $dbhost = "trolley.proxy.rlwy.net";
 $dbport = 22777; 
@@ -10,6 +12,12 @@ $conn = mysqli_connect($dbhost, $username, $password, $db, $dbport);
 
 $response = array();
 $response["success"] = false;
+
+if (!$conn) {
+    $response["message"] = "Erro na ligação à base de dados.";
+    echo json_encode($response);
+    exit;
+}
 
 $query = "SELECT Score FROM Jogo 
           JOIN Utilizador ON Jogo.Email = Utilizador.Email 
@@ -26,6 +34,5 @@ if ($result && mysqli_num_rows($result) > 0) {
     $response["message"] = "Nenhum jogo ativo encontrado.";
 }
 
-header('Content-Type: application/json');
 echo json_encode($response);
 ?>
