@@ -5,7 +5,8 @@
 	$password = $_POST["password"];
 
     $conn = mysqli_connect($dbhost,$username,$password,$db);
-	$sql = "SELECT Msg, Leitura, Sala, Sensor, TipoAlerta, Hora, HoraEscrita from mensagens where Hora >= now() - interval 60 minute ORDER BY Hora DESC";
+	$sql = "SELECT Msg, Leitura, Sala, Sensor, TipoAlerta, Hora, HoraEscrita from mensagens WHERE HoraEscrita >= NOW() - INTERVAL 65 MINUTE";
+
 	$response["mensagens"] = array();
 	$result = mysqli_query($conn, $sql);	
 	if ($result){
