@@ -32,6 +32,9 @@
 		}
 	}
 	header('Content-Type: application/json');
+
+	error_log("Mensagens encontradas: " . count($response["mensagens"]));
+
 	// tell browser that its a json data
 	echo json_encode($response);
 	//converting array to JSON string
