@@ -19,7 +19,7 @@ if (!$conn) {
     exit;
 }
 
-$query = "SELECT Score FROM Jogo 
+$query = "SELECT IDJogo, Score FROM Jogo 
           JOIN Utilizador ON Jogo.Email = Utilizador.Email 
           WHERE Utilizador.Email = '$email' AND Jogo.IsRunning = 1 
           ORDER BY IDJogo DESC LIMIT 1";
