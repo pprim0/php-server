@@ -3,8 +3,10 @@
 	$dbhost = "trolley.proxy.rlwy.net";
 	$username = $_POST["username"];
 	$password = $_POST["password"];
+	$port = 22777;
 
-    $conn = mysqli_connect($dbhost,$username,$password,$db);
+	$conn = mysqli_connect($dbhost, $username, $password, $db, $port);
+
 	$sql = "SELECT Msg, Leitura, Sala, Sensor, TipoAlerta, Hora, HoraEscrita 
         FROM mensagens 
         WHERE HoraEscrita >= NOW() - INTERVAL 65 MINUTE 
