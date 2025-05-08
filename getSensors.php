@@ -9,24 +9,34 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "
-    SELECT s.Hour, s.Sound
-    FROM Sound s
-    WHERE s.IDJogo = (
-        SELECT IDJogo FROM Jogo WHERE isRunning = 1 LIMIT 1
-    )
-    AND s.Hour >= NOW() - INTERVAL 10 SECOND
-    ORDER BY s.Hour ASC
-";
-
-$result = mysqli_query($conn, $sql);
+// Seleciona o ID do jogo em execução
+$idJogoQuery = "SELECT IDJogo FROM Jogo WHERE isRunning = 1 LIMIT 1";
+$idJogoResult = mysqli_query($conn, $idJogoQuery);
 $response = array();
 
-if ($result && mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {
-        // Corrigir vírgulas decimais no campo Sound (ex: 20,5 → 20.5)
-        $row["Sound"] = str_replace(',', '.', $row["Sound"]);
-        array_push($response, $row);
+if ($idJogoResult && mysqli_num_rows($idJogoResult) > 0) {
+    $row = mysqli_fetch_assoc($idJogoResult);
+    $idJogo = $row['IDJogo'];
+
+    // Vai buscar os últimos 20 registos desse jogo
+    $sql = "
+        SELECT Hour, Sound
+        FROM Sound
+        WHERE IDJogo = $idJogo
+        ORDER BY Hour DESC
+        LIMIT 10
+    ";
+
+    $result = mysqli_query($conn, $sql);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $row["Sound"] = str_replace(',', '.', $row["Sound"]); // Normaliza formato
+            array_push($response, $row);
+        }
+
+        // Inverter para ordem cronológica crescente (para o gráfico)
+        $response = array_reverse($response);
     }
 }
 
