@@ -8,7 +8,7 @@
 	$conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
 	$sql = "SELECT Msg, Leitura, Sala, Sensor, TipoAlerta, Hora, HoraEscrita 
-        FROM mensagens 
+        FROM Mensagens 
         WHERE HoraEscrita >= NOW() - INTERVAL 65 MINUTE 
         ORDER BY HoraEscrita DESC";
 
