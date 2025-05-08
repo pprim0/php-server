@@ -9,7 +9,7 @@ $conn = mysqli_connect($dbhost, $username, $password, $db, 22777);
 $response = array();
 $response["data"] = array();
 
-$sql = "SELECT * FROM `MedicoesPassagens` 
+$sql = "SELECT * FROM `OcupacaoLabirinto` 
         WHERE `IDJogo` = (SELECT MAX(`IDJogo`) FROM `ocupaçãolabirinto`) 
         ORDER BY `Sala`;";
 
