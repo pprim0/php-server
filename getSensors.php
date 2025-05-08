@@ -9,34 +9,32 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Seleciona o ID do jogo em execução
-$idJogoQuery = "SELECT IDJogo FROM Jogo WHERE isRunning = 1 LIMIT 1";
-$idJogoResult = mysqli_query($conn, $idJogoQuery);
-$response = array();
+// Buscar normalnoise da tabela Setup
+$noiseResult = mysqli_query($conn, "SELECT normalnoise FROM Setup LIMIT 1");
+$normalNoise = 5.0;
+if ($noiseResult && mysqli_num_rows($noiseResult) > 0) {
+    $row = mysqli_fetch_assoc($noiseResult);
+    $normalNoise = floatval($row["normalnoise"]);
+}
 
-if ($idJogoResult && mysqli_num_rows($idJogoResult) > 0) {
-    $row = mysqli_fetch_assoc($idJogoResult);
-    $idJogo = $row['IDJogo'];
+// Buscar os últimos 20 registos
+$sql = "
+    SELECT s.Hour, s.Sound
+    FROM Sound s
+    WHERE s.IDJogo = (
+        SELECT IDJogo FROM Jogo WHERE isRunning = 1 LIMIT 1
+    )
+    ORDER BY s.Hour DESC
+    LIMIT 20
+";
 
-    // Vai buscar os últimos 20 registos desse jogo
-    $sql = "
-        SELECT Hour, Sound
-        FROM Sound
-        WHERE IDJogo = $idJogo
-        ORDER BY Hour DESC
-        LIMIT 10
-    ";
+$result = mysqli_query($conn, $sql);
+$response = [];
 
-    $result = mysqli_query($conn, $sql);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        while ($row = mysqli_fetch_assoc($result)) {
-            $row["Sound"] = str_replace(',', '.', $row["Sound"]); // Normaliza formato
-            array_push($response, $row);
-        }
-
-        // Inverter para ordem cronológica crescente (para o gráfico)
-        $response = array_reverse($response);
+if ($result && mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $row["normalnoise"] = $normalNoise;
+        array_unshift($response, $row); // mantém em ordem ASC
     }
 }
 
