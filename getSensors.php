@@ -9,10 +9,12 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+// Valor fixo de referência para o ruído
+$normalNoise = 5.0;
+
 $sql = "
-    SELECT s.Hour, s.Sound, z.normalnoise
+    SELECT s.Hour, s.Sound
     FROM Sound s
-    JOIN SetupMaze z ON 1=1
     WHERE s.IDJogo = (
         SELECT IDJogo FROM Jogo WHERE isRunning = 1 LIMIT 1
     )
@@ -23,12 +25,14 @@ $sql = "
 $result = mysqli_query($conn, $sql);
 $response = array();
 
-if (mysqli_num_rows($result) > 0) {
+if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
+        $row["normalnoise"] = $normalNoise;  // adiciona no JSON
         array_push($response, $row);
     }
 }
 
 mysqli_close($conn);
+header('Content-Type: application/json');
 echo json_encode($response);
 ?>
