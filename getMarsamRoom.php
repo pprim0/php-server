@@ -10,7 +10,7 @@ $response = array();
 $response["data"] = array();
 
 $sql = "SELECT * FROM `OcupacaoLabirinto` 
-        WHERE `IDJogo` = (SELECT MAX(`IDJogo`) FROM `OcupacaoLabirinto`) 
+        WHERE `IDJogo` = (SELECT `IDJogo` FROM `Jogo` WHERE `isRunning` = 1 LIMIT 1)
         ORDER BY `Sala`;";
 
 $result = mysqli_query($conn, $sql);
