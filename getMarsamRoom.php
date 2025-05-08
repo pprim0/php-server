@@ -10,7 +10,7 @@ $response = array();
 $response["data"] = array();
 
 $sql = "SELECT * FROM `OcupacaoLabirinto` 
-        WHERE `IDJogo` = (SELECT MAX(`IDJogo`) FROM `ocupaçãolabirinto`) 
+        WHERE `IDJogo` = (SELECT MAX(`IDJogo`) FROM `OcupacaoLabirinto`) 
         ORDER BY `Sala`;";
 
 $result = mysqli_query($conn, $sql);
@@ -19,7 +19,6 @@ if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
         array_push($response["data"], $row);
     }
-    // Adiciona o timestamp da última leitura (podes ajustar o campo conforme necessário)
     $response["last_update"] = date("Y-m-d H:i:s");
     $response["success"] = true;
 } else {
