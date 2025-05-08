@@ -30,6 +30,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     $row = mysqli_fetch_assoc($result);
     $response["success"] = true;
     $response["score"] = $row["Score"];
+    $response["idjogo"] = $row["IDJogo"];
 } else {
     $response["message"] = "Nenhum jogo ativo encontrado.";
 }
