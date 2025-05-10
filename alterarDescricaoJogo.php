@@ -33,7 +33,7 @@ try {
     echo json_encode(["success" => true, "message" => "Descrição atualizada com sucesso!"]);
     $stmt->close();
 } catch (mysqli_sql_exception $e) {
-    echo json_encode(["success" => false, "message" => "Erro MySQL: " . $e->getMessage()]);
+    echo json_encode(["success" => false, "message" => $e->getMessage()]);
 }
 
 
