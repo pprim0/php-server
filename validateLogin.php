@@ -13,6 +13,11 @@ $return = [
     "message" => ""
 ];
 
+header('Access-Control-Allow-Origin: *'); // Permite requisições de qualquer origem
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+
 try {
     // Tenta ligar com as credenciais fornecidas
     $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
