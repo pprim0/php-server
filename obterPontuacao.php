@@ -8,7 +8,7 @@ $username = $_POST["username"];
 $password = $_POST["password"];
 $email = $_POST["email"];
 
-eader('Access-Control-Allow-Origin: *'); // Permitir chamadas de qualquer origem
+header('Access-Control-Allow-Origin: *'); // Permitir chamadas de qualquer origem
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
