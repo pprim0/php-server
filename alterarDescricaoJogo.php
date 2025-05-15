@@ -9,6 +9,10 @@ $email = $_POST["email"];
 $idJogo = $_POST["idjogo"];
 $novaDescricao = $_POST["novaDescricao"];
 
+header('Access-Control-Allow-Origin: *'); // Permitir chamadas de qualquer origem
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Content-Type: application/json');
 
 $conn = mysqli_connect($dbhost, $username, $password, $db, $port);
 
