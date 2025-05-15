@@ -1,5 +1,4 @@
 <?php
-header('Content-Type: application/json'); // <-- DEVE vir antes de qualquer saída
 
 $db = "railway";
 $dbhost = "trolley.proxy.rlwy.net";
