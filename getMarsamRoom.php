@@ -6,6 +6,11 @@ $password = $_POST["password"];
 
 $conn = mysqli_connect($dbhost, $username, $password, $db, 22777);
 
+header('Access-Control-Allow-Origin: *'); // Permitir chamadas de qualquer origem
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Content-Type: application/json');
+
 $response = array();
 $response["data"] = array();
 
