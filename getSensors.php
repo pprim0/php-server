@@ -6,6 +6,11 @@ $dbhost = "trolley.proxy.rlwy.net";
 $username = $_POST["username"];
 $password = $_POST["password"];
 
+header('Access-Control-Allow-Origin: *'); // Permitir chamadas de qualquer origem
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+header('Content-Type: application/json');
+
 $conn = mysqli_connect($dbhost, $username, $password, $db, 22777);
 if (!$conn) {
     echo json_encode(["success" => false, "message" => "Erro de ligação"]);
