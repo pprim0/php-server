@@ -13,6 +13,8 @@ $return = [
     "message" => ""
 ];
 
+header('Content-Type: application/json');
+
 // Adicionando cabeçalhos CORS para permitir requisições de qualquer origem
 header('Access-Control-Allow-Origin: *'); // Permite requisições de qualquer origem
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
